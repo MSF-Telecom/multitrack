@@ -2,23 +2,36 @@ import serial
 import requests
 import pynmea2
 import lib.PyCCMDV2.PyCCMDV2 as pyccmd
+import configparser
 
-comPort = 'COM64'
-comSpeed = 19200
 
-serverUrl = 'http://localhost'
-serverPort = '5055'
-
-ownID = 65519
-talkgroupID = 9900
 
 verboseGlobal = True
-verboseIface = False
+verboseIface = True
 
 
-radioSerial = serial.Serial(comPort, comSpeed, timeout = 2)
-radio = pyccmd.Transceiver(radioSerial, ownID, verbose=verboseIface, mode = False)
+def serialInit():
+    global radioSerial, radio
+    radioSerial = serial.Serial(comPort, comSpeed, timeout = 2)
+    radio = pyccmd.Transceiver(radioSerial, ownID, verbose=verboseIface, mode = False)
 
+
+def readConfig():
+    configFile = 'config.ini'
+    config = configparser.ConfigParser()
+    config.read(configFile)
+
+    global comPort, comSpeed, ownID, talkgroupID
+    comPort = config['RADIO']['port']
+    comSpeed = int(config['RADIO']['speed'])
+    ownID = int(config['RADIO']['ownID'])
+    talkgroupID = int(config['RADIO']['talkgroupID'])
+
+    global serverUrl, serverPort
+    serverUrl = config['TRACCAR']['serverURL']
+    serverPort = config['TRACCAR']['serverPort']
+    
+    
 
 def radioHandler():
     messageBuffer = radio.receiveMessage(verbose=verboseIface)
@@ -53,6 +66,8 @@ def sendTraccar(radioID, lat, lon): #Sends a POST request to the server with the
 
 
 if __name__ == "__main__":
+    readConfig()
+    serialInit()
     radioInit()
     while True:
         rawPosition = radioHandler()
