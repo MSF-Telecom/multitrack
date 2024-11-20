@@ -3,17 +3,25 @@ import requests
 import pynmea2
 import lib.PyCCMDV2.PyCCMDV2 as pyccmd
 import configparser
+import sys
 
 
 
 verboseGlobal = True
-verboseIface = True
+verboseIface = False
 
 
 def serialInit():
     global radioSerial, radio
-    radioSerial = serial.Serial(comPort, comSpeed, timeout = 2)
-    radio = pyccmd.Transceiver(radioSerial, ownID, verbose=verboseIface, mode = False)
+    try:
+        radioSerial = serial.Serial(comPort, comSpeed, timeout = 2)
+        radio = pyccmd.Transceiver(radioSerial, ownID, verbose=verboseIface, mode = False)
+        return 
+    except serial.SerialException as e:
+        print('[RADIO] Connection to radio failed. Eror contents: ', repr(e))
+        print('Check your serial port number, disconnect/reconnect the adapter and retry')
+        sys.exit()
+    
 
 
 def readConfig():
@@ -54,6 +62,9 @@ def radioInit():
 
 
 def sendTraccar(radioID, lat, lon): #Sends a POST request to the server with the ID and the coordinates
+    if nmeaData.latitude == 0.0000 or nmeaData.longitude == 0.0000:
+        print('[TRACCAR] Default (non-acquired) coordinates received, not sending to server')
+        return
     try:
         requests.post(serverUrl+':'+serverPort, data = {'id' : radioID, 'lat': lat, 'lon': lon})
         print('[TRACCAR] Coordinates sent to server')
