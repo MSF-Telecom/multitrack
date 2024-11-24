@@ -18,8 +18,9 @@ def serialInit():
         radio = pyccmd.Transceiver(radioSerial, ownID, verbose=verboseIface, mode = False)
         return 
     except serial.SerialException as e:
-        print('[RADIO] Connection to radio failed. Eror contents: ', repr(e))
+        print('[RADIO] Connection to radio failed. Error contents: ', repr(e))
         print('Check your serial port number, disconnect/reconnect the adapter and retry')
+        input('Press any key to exit')
         sys.exit()
     
 
@@ -86,9 +87,18 @@ if __name__ == "__main__":
     readConfig()
     serialInit()
     radioInit()
-    while True:
-        rawPosition = radioHandler()
-        if rawPosition:
-            nmeaData = pynmea2.parse(rawPosition[0])
-            sendTraccar(rawPosition[1], nmeaData.latitude, nmeaData.longitude)
+    try:
+        while True:
+            rawPosition = radioHandler()
+            if rawPosition:
+                nmeaData = pynmea2.parse(rawPosition[0])
+                sendTraccar(rawPosition[1], nmeaData.latitude, nmeaData.longitude)
+    except KeyboardInterrupt:
+        radioSerial.close()
+        print('Program terminated by user')
+        input('Press any key to exit')
+    except serial.SerialException as e:
+        print('[RADIO] Connection to radio failed. Error contents: ', repr(e))
+        print('Check your serial port number, disconnect/reconnect the adapter and retry')
+        input('Press any key to exit')
             
