@@ -43,9 +43,15 @@ def readConfig():
 
 def radioHandler():
     messageBuffer = radio.receiveMessage(verbose=verboseIface)
-    if not messageBuffer[2]=='TIMEOUT_ERROR' and messageBuffer[3]:
-        if verboseGlobal : print('[RADIO] Got a position frame from:', messageBuffer[1])
-        return (messageBuffer[2], int(messageBuffer[1]))
+    if messageBuffer.messageType=='GPS':        
+        if verboseGlobal : print('[RADIO] Got a position frame from:', messageBuffer.senderID)
+        #We return the message's contents and the ID of radio
+        return (messageBuffer.messageContents, int(messageBuffer.senderID))
+
+    #This is necessairy to make sure the radio always has the correct ID for reception, otherwise it'll just ignore the GPS positions...
+    elif messageBuffer.messageType=='CH':
+        if verboseGlobal : print('[RADIO] Channel changed! Resetting sender ID')
+        radio.setRadioID(ownID,talkgroupID)
     return False
 
 
