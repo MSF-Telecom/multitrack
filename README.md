@@ -54,7 +54,7 @@ Here are the tools used:
 After installing and setting up Traccar, the following lines will allow to create a dev environment:
 
 ```zsh
-pip install pyserial pynmea2 configparser 
+pip install pyserial pynmea2 configparser requests
 git clone https://github.com/MSF-Telecom/multitrack/
 cd multitrack
 ```
