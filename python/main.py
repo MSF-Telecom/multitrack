@@ -8,7 +8,7 @@ import sys
 
 
 verboseGlobal = True
-verboseIface = False
+verboseIface = True
 
 
 def serialInit():
