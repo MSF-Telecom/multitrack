@@ -46,12 +46,22 @@ No logfiles are implemented yet. However, the console's output will help in narr
 This initial version has been developed on a Windows 10 computer. However, no issues should come up when running it under Linux or MacOS.
 Here are the tools used:
 
+
 - Python 3.12 with pip
 - git
 - Python libraries: pyserial, pynmea2, configparser
 - Traccar
 
+
+Optional, create a virtual environment :
+
+```zsh
+python3 -m venv ./venv
+source ./venv/bin/activate
+```
+
 After installing and setting up Traccar, the following lines will allow to create a dev environment:
+
 
 ```zsh
 pip install pyserial pynmea2 configparser 
