@@ -2,3 +2,4 @@
 /dist
 venv
 private
+.DS_Store
