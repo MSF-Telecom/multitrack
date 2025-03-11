@@ -1,0 +1,19 @@
+services:
+    dummy_source:
+        image: dummy_source:latest
+        container_name: dummy_source
+        build:
+            context: .
+        restart: unless-stopped
+        privileged: true
+        tty: true
+        stdin_open: true
+        network_mode: host
+        ipc: host
+        pid: host
+        environment:
+            - "PUBLISH_PORT=9000"
+            - "LISTEN_PORT=8500"
+        # command: [ "/bin/bash", "-c", "ros2 launch bms_node launch.py" ]
+        # volumes:
+        #     - /dev:/dev:rw
