@@ -1,8 +1,8 @@
 {
-  "0001": {
+  "dummy": {
     "model": "MXP420",
     "serial": "0001",
-    "status": "active",
+    "statuses": ["active", "stunned", "killed"],
     "last_updated": "0",
     "positions": [
       {
