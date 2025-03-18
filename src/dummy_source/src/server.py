@@ -17,27 +17,30 @@ print(f"LISTEN_PORT: {LISTEN_PORT}")
 url = 'http://'+PUBLISH_IP+':'+PUBLISH_PORT+'/'
 myobj = {}
 
-with open("../datasource.json", "r") as f:
+with open("datasource.json", "r") as f:
     raw = f.read()
     # convert raw to json object
     dataSource = json.loads(raw)
 
-for key in dataSource:
-    print(key)
-    for position in dataSource[key]["positions"]:
-        myobj = {
-            "main_ID": key,
-            "model": dataSource[key]["model"],
-            "serial": dataSource[key]["serial"],
-            "status": dataSource[key]["status"],
-            "last_updated": dataSource[key]["last_updated"],
-            "timestamp": position["timestamp"],
-            "latitude": position["latitude"],
-            "longitude": position["longitude"],
-            "text": dataSource[key]["texts"][random.randint(0, 4)]
-        }
-        x = requests.post(url, json = myobj)
-        print(x.text)
-        time.sleep(2)
+def post_data():
+    for key in dataSource:
+        print(key)
+        for position in dataSource[key]["positions"]:
+            myobj = {
+                "main_ID": key,
+                "model": dataSource[key]["model"],
+                "serial": dataSource[key]["serial"],
+                "status": dataSource[key]["status"],
+                "last_updated": dataSource[key]["last_updated"],
+                "timestamp": position["timestamp"],
+                "latitude": position["latitude"],
+                "longitude": position["longitude"],
+                "text": dataSource[key]["texts"][random.randint(0, 4)]
+            }
+            x = requests.post(url, json = myobj)
+            print(x.text)
+            time.sleep(2)
 
-exit()
+if __name__ == '__main__':
+    while(1):
+        post_data()
