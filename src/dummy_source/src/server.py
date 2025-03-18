@@ -22,20 +22,74 @@ with open("datasource.json", "r") as f:
     # convert raw to json object
     dataSource = json.loads(raw)
 
+
+
 def post_data():
     for key in dataSource:
+        # The posted data should look like this for a new position :
+        # {
+        #     "main_ID": <main_ID>,
+        #     "model": <model>,
+        #     "serial": <serial>,
+        #     "last_updated": <last_updated>,
+        #     "position": {
+        #         "timestamp": <timestamp>,
+        #         "latitude": <latitude>,
+        #         "longitude": <longitude>
+        #     }
+        # }
+        #
+        # And this for a new text message :
+        # {
+        #     "main_ID": <main_ID>,
+        #     "model": <model>,
+        #     "serial": <serial>,
+        #     "last_updated": <last_updated>,
+        #     "text": <text>
+        # }
+        #
+        # And this for a new status :
+        # {
+        #     "main_ID": <main_ID>,
+        #     "model": <model>,
+        #     "serial": <serial>,
+        #     "status": <status>,
+        #     "last_updated": <last_updated>
+        # }
         print(key)
         for position in dataSource[key]["positions"]:
             myobj = {
                 "main_ID": key,
                 "model": dataSource[key]["model"],
                 "serial": dataSource[key]["serial"],
-                "status": dataSource[key]["status"],
-                "last_updated": dataSource[key]["last_updated"],
-                "timestamp": position["timestamp"],
-                "latitude": position["latitude"],
-                "longitude": position["longitude"],
-                "text": dataSource[key]["texts"][random.randint(0, 4)]
+                "last_updated": int(time.time()),
+                "position": {
+                    "timestamp": int(time.time()),
+                    "latitude": position["latitude"],
+                    "longitude": position["longitude"]
+                }
+            }
+            x = requests.post(url, json = myobj)
+            print(x.text)
+            time.sleep(2)
+        for text in dataSource[key]["texts"]:
+            myobj = {
+                "main_ID": key,
+                "model": dataSource[key]["model"],
+                "serial": dataSource[key]["serial"],
+                "last_updated": int(time.time()),
+                "text": text
+            }
+            x = requests.post(url, json = myobj)
+            print(x.text)
+            time.sleep(2)
+        for status in dataSource[key]["statuses"]:
+            myobj = {
+                "main_ID": key,
+                "model": dataSource[key]["model"],
+                "serial": dataSource[key]["serial"],
+                "status": status,
+                "last_updated": int(time.time())
             }
             x = requests.post(url, json = myobj)
             print(x.text)
