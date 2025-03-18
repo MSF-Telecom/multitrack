@@ -14,8 +14,29 @@ const server = http.createServer(function(request, response) {
     })
     request.on('end', function() {
       console.log('Body: ' + body)
-      response.writeHead(200, {'Content-Type': 'text/html'})
-      response.end('post received')
+      body = JSON.parse(body)
+      // If key "position" is found in the body, then print it
+      if (body.hasOwnProperty('position')) {
+        console.log('Got position !')
+        console.log(body)
+        console.log(body['position'])
+        response.writeHead(200, {'Content-Type': 'text/html'})
+        response.end('Position received')
+      } else if (body.hasOwnProperty('text')) {
+        console.log('Got text !')
+        console.log(body['text'])
+        response.writeHead(200, {'Content-Type': 'text/html'})
+        response.end('Text received')
+      } else if (body.hasOwnProperty('status')) {
+        console.log('Got status !')
+        console.log(body['status'])
+        response.writeHead(200, {'Content-Type': 'text/html'})
+        response.end('Status received')
+      } else {
+        console.log('No key found')
+        response.writeHead(200, {'Content-Type': 'text/html'})
+        response.end('No key found')
+      }
     })
   } else {
     console.log('GET')
