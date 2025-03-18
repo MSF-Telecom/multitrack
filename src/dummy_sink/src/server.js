@@ -10,7 +10,7 @@ const server = http.createServer(function(request, response) {
     var body = ''
     request.on('data', function(data) {
       body += data
-      console.log('Partial body: ' + body)
+      // console.log('Partial body: ' + body)
     })
     request.on('end', function() {
       console.log('Body: ' + body)
@@ -18,18 +18,17 @@ const server = http.createServer(function(request, response) {
       // If key "position" is found in the body, then print it
       if (body.hasOwnProperty('position')) {
         console.log('Got position !')
-        console.log(body)
-        console.log(body['position'])
+        console.log(body.position)
         response.writeHead(200, {'Content-Type': 'text/html'})
         response.end('Position received')
       } else if (body.hasOwnProperty('text')) {
         console.log('Got text !')
-        console.log(body['text'])
+        console.log(body.text)
         response.writeHead(200, {'Content-Type': 'text/html'})
         response.end('Text received')
       } else if (body.hasOwnProperty('status')) {
         console.log('Got status !')
-        console.log(body['status'])
+        console.log(body.status)
         response.writeHead(200, {'Content-Type': 'text/html'})
         response.end('Status received')
       } else {
