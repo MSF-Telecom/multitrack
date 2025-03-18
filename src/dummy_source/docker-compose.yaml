@@ -13,7 +13,7 @@ services:
         pid: host
         environment:
             - "PUBLISH_IP=127.0.0.1"
-            - "PUBLISH_PORT=9000"
+            - "PUBLISH_PORT=8000"
             - "LISTEN_PORT=8500"
         # command: [ "/bin/bash", "-c", "ros2 launch bms_node launch.py" ]
         # volumes:
