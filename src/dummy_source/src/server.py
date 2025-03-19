@@ -22,12 +22,32 @@ with open("datasource.json", "r") as f:
     # convert raw to json object
     dataSource = json.loads(raw)
 
-
+def post_identify_plugin():
+    # The posted data should look like this :
+    # {
+    #     "type": "identify_plugin",
+    #     "main_ID": <main_ID>,
+    #     "actions": [<actions>],
+    #     "text": <true/false>,
+    #     "position": <true/false>,
+    #     "status": <true/false>
+    # }
+    myobj = {
+        "type": "identify_plugin",
+        "main_ID": "dummy",
+        "actions": ["stun", "kill", "revive"],
+        "text": True,
+        "position": True,
+        "status": True
+    }
+    x = requests.post(url, json = myobj)
+    print(x.text)
 
 def post_data():
     for key in dataSource:
         # The posted data should look like this for a new position :
         # {
+        #     "type": "device",
         #     "main_ID": <main_ID>,
         #     "model": <model>,
         #     "serial": <serial>,
@@ -41,6 +61,7 @@ def post_data():
         #
         # And this for a new text message :
         # {
+        #     "type": "device",
         #     "main_ID": <main_ID>,
         #     "model": <model>,
         #     "serial": <serial>,
@@ -50,6 +71,7 @@ def post_data():
         #
         # And this for a new status :
         # {
+        #     "type": "device",
         #     "main_ID": <main_ID>,
         #     "model": <model>,
         #     "serial": <serial>,
@@ -59,6 +81,7 @@ def post_data():
         print(key)
         for position in dataSource[key]["positions"]:
             myobj = {
+                "type": "device",
                 "main_ID": key,
                 "model": dataSource[key]["model"],
                 "serial": dataSource[key]["serial"],
@@ -74,6 +97,7 @@ def post_data():
             time.sleep(2)
         for text in dataSource[key]["texts"]:
             myobj = {
+                "type": "device",
                 "main_ID": key,
                 "model": dataSource[key]["model"],
                 "serial": dataSource[key]["serial"],
@@ -85,6 +109,7 @@ def post_data():
             time.sleep(2)
         for status in dataSource[key]["statuses"]:
             myobj = {
+                "type": "device",
                 "main_ID": key,
                 "model": dataSource[key]["model"],
                 "serial": dataSource[key]["serial"],
@@ -96,5 +121,6 @@ def post_data():
             time.sleep(2)
 
 if __name__ == '__main__':
+    post_identify_plugin()
     while(1):
         post_data()
