@@ -26,7 +26,16 @@ h1 {
 }
 
 a {
-    color: var(--primary-color);
+    color: blue;
+}
+
+.maplibregl-popup-content {
+    background-color: var(--bg-color);
+    border-radius: 10px;
+    padding: 10px;
+    font-family: AtlasGrotesk-Medium, sans-serif;
+    font-size: 1em;
+    color: black;
 }
 
 .container {
@@ -37,7 +46,7 @@ a {
 }
 
 
-#map_page {
+#map {
     flex: 1;
     border: 1px solid black;
     border-radius: 10px;

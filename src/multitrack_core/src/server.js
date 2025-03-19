@@ -15,6 +15,7 @@ gui_app.use(express.static("app/img"));
 gui_app.use(express.static("app/fonts"));
 gui_app.use(express.static("app/index.html"));
 gui_app.use(express.static("app/favicon.ico"));
+gui_app.use(express.static("maps"));
 
 gui_app.get("/", function (req, res) {
   // Serve the GUI from app folder

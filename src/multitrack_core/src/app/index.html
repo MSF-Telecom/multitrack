@@ -9,6 +9,9 @@
     <link rel="stylesheet" href="fonts.css" />
     <link rel="stylesheet" href="style.css" />
     <link rel="stylesheet" href="darkswitch.css" />
+    <link rel="stylesheet" href="lib/maplibre/maplibre-gl.css" crossorigin="anonymous" />
+    <script src="lib/maplibre/maplibre-gl.js" crossorigin="anonymous"></script>
+    <script src="lib/maplibre/pmtiles.js"></script>
   </head>
   <body>
     <h1>Welcome to multitrack_core!</h1>
@@ -42,10 +45,11 @@
     </details>
 
     <div class="container">
-      <div id="map_page"><iframe src="map.html" loading="lazy" style="width:100%; height: 100%; border-radius: 10px;"></iframe></div>
+      <div id="map"></div>
       <div id="controls">controls</div>
     </div>
+    <script src="map.js"></script>
     <script src="script.js"></script>
-    <script src="darkswitch.js" async defer></script>
+    <script src="darkswitch.js"></script>
   </body>
 </html>
