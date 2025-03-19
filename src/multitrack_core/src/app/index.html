@@ -1,18 +1,51 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title></title>
-        <meta name="description" content="Multitrack core web application">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="fonts.css">
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
-        <h1>Welcome to multitrack_core!</h1>
-        This is a <b>bold</b> statement.<br>
-        This is an <i>italic</i> statement.<br>
-        <script src="script.js" async defer></script>
-    </body>
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title></title>
+    <meta name="description" content="Multitrack core web application" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" href="fonts.css" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="darkswitch.css" />
+  </head>
+  <body>
+    <h1>Welcome to multitrack_core!</h1>
+    This is a <b>bold</b> statement.<br />
+    This is an <i>italic</i> statement.<br />
+    <details class="theme-switcher">
+      <summary>Theme</summary>
+      <ul class="darkmode_switch">
+        <li>
+          <input type="radio" id="light" name="theme-mode"/>
+          <label for="light">
+            <span>Light</span>
+            <span></span>
+          </label>
+        </li>
+        <li>
+          <input type="radio" id="dark" name="theme-mode" />
+          <label for="dark">
+            <span>Dark</span>
+            <span></span>
+          </label>
+        </li>
+        <li>
+          <input type="radio" id="auto" name="theme-mode" checked/>
+          <label for="auto">
+            <span>System</span>
+            <span></span>
+          </label>
+        </li>
+      </ul>
+    </details>
+
+    <div class="container">
+      <div id="map">map</div>
+      <div id="controls">controls</div>
+    </div>
+    <script src="script.js" async defer></script>
+    <script src="darkswitch.js" async defer></script>
+  </body>
 </html>

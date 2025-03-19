@@ -1,8 +1,62 @@
+:root {
+    --white-pearl: #ede1d2;
+    --gray: #e8e8ec;
+    --slate-gray: #789392;
+    --white: #fff;
+    --black: black;
+    --text-color: var(--black);
+    --bg-color: var(--white);
+}
+
+.theme-dark {
+    color-scheme: dark;
+    --text-color: var(--white);
+    --bg-color: var(--black);
+}
+
+html,body {
+    height:100%;
+}
+
 h1 {
     font-family: AtlasGrotesk-Medium, sans-serif;
     font-size: 2em;
     margin-bottom: 0.5em;
+    color: var(--secondary-color);
 }
-/* h1 {
-    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-} */
+
+a {
+    color: var(--primary-color);
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    justify-content: stretch;
+}
+
+
+#map {
+    flex: 1;
+    border: 1px solid black;
+    border-radius: 10px;
+
+}
+
+#controls {
+    flex: 1;
+    border: 1px solid red;
+    border-radius: 10px;
+    max-width: 25%;
+}
+
+/* CSS for Mobile devices */
+@media (max-width: 800px) {
+    .container {
+        flex-direction: column;
+    }
+    #controls {
+        max-width: 100%;
+    }
+}
