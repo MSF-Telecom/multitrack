@@ -18,7 +18,7 @@
       <summary>Theme</summary>
       <ul class="darkmode_switch">
         <li>
-          <input type="radio" id="light" name="theme-mode"/>
+          <input type="radio" id="light" name="theme-mode" checked/>
           <label for="light">
             <span>Light</span>
             <span></span>
@@ -32,7 +32,7 @@
           </label>
         </li>
         <li>
-          <input type="radio" id="auto" name="theme-mode" checked/>
+          <input type="radio" id="auto" name="theme-mode"/>
           <label for="auto">
             <span>System</span>
             <span></span>
@@ -42,10 +42,10 @@
     </details>
 
     <div class="container">
-      <div id="map">map</div>
+      <div id="map_page"><iframe src="map.html" loading="lazy" style="width:100%; height: 100%; border-radius: 10px;"></iframe></div>
       <div id="controls">controls</div>
     </div>
-    <script src="script.js" async defer></script>
+    <script src="script.js"></script>
     <script src="darkswitch.js" async defer></script>
   </body>
 </html>

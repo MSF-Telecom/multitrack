@@ -37,10 +37,12 @@ a {
 }
 
 
-#map {
+#map_page {
     flex: 1;
     border: 1px solid black;
     border-radius: 10px;
+    height: 65vh;
+    width: 100%;
 
 }
 
