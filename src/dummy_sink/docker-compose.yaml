@@ -1,0 +1,16 @@
+services:
+  dummy_sink:
+    image: dummy_sink:latest
+    container_name: dummy_sink
+    build:
+      context: .
+    restart: unless-stopped
+    tty: true
+    stdin_open: true
+    environment:
+      - "LISTEN_PORT=8000"
+    ports:
+      - "8000:8000"
+    # command: [ "/bin/bash", "-c", "ros2 launch bms_node launch.py" ]
+    # volumes:
+    #     - /dev:/dev:rw
