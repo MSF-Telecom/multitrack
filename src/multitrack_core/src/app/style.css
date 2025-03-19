@@ -35,7 +35,11 @@ a {
     padding: 10px;
     font-family: AtlasGrotesk-Medium, sans-serif;
     font-size: 1em;
-    color: black;
+    color: var(--text-color);
+}
+
+.maplibregl-popup-anchor-bottom .maplibregl-popup-tip {
+    border-top-color: var(--bg-color);
 }
 
 .container {

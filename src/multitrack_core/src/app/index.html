@@ -6,12 +6,12 @@
     <title></title>
     <meta name="description" content="Multitrack core web application" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <link rel="stylesheet" href="fonts.css" />
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="darkswitch.css" />
     <link rel="stylesheet" href="lib/maplibre/maplibre-gl.css" crossorigin="anonymous" />
     <script src="lib/maplibre/maplibre-gl.js" crossorigin="anonymous"></script>
     <script src="lib/maplibre/pmtiles.js"></script>
+    <link rel="stylesheet" href="fonts.css" />
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="darkswitch.css" />
   </head>
   <body>
     <h1>Welcome to multitrack_core!</h1>
@@ -21,7 +21,7 @@
       <summary>Theme</summary>
       <ul class="darkmode_switch">
         <li>
-          <input type="radio" id="light" name="theme-mode" checked/>
+          <input type="radio" id="light" name="theme-mode"/>
           <label for="light">
             <span>Light</span>
             <span></span>
@@ -35,7 +35,7 @@
           </label>
         </li>
         <li>
-          <input type="radio" id="auto" name="theme-mode"/>
+          <input type="radio" id="auto" name="theme-mode" checked/>
           <label for="auto">
             <span>System</span>
             <span></span>
