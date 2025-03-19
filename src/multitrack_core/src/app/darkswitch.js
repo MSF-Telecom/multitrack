@@ -2,14 +2,14 @@ const html = document.documentElement;
 const darkmode_switch = document.querySelector(".darkmode_switch");
 const inputs = darkmode_switch.querySelectorAll("input");
 
-if (localStorage.getItem("dark-mode")) {
-  html.classList.add("theme-dark");
-}
+// if (localStorage.getItem("dark-mode")) {
+//   html.classList.add("theme-dark");
+// }
 
-if (localStorage.getItem("selected-radio")) {
-  darkmode_switch.querySelector(`#${localStorage.getItem("selected-radio")}`).checked =
-    "true";
-}
+// if (localStorage.getItem("selected-radio")) {
+//   darkmode_switch.querySelector(`#${localStorage.getItem("selected-radio")}`).checked =
+//     "true";
+// }
 
 const setTheme = (theme) => {
   if (theme === "dark") {
@@ -46,3 +46,17 @@ window
   .addEventListener("change", handleMediaChange);
 
 inputs.forEach((input) => input.addEventListener("input", handleInputChange));
+
+// Set system input as checked after 1s
+setTimeout(() => {
+  const systemInput = darkmode_switch.querySelector("#auto");
+  if (systemInput) {
+    systemInput.checked = true;
+  }
+  const lightInput = darkmode_switch.querySelector("#light");
+  if (lightInput) {
+    lightInput.checked = false;
+  }
+  const event = new Event("input");
+  systemInput.dispatchEvent(event);
+}, 50);
