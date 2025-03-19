@@ -4,8 +4,20 @@ var plugin_app = express();
 var gui_port = 8080;
 var plugin_port = 8081;
 
+
+gui_app.use(express.static("app"));
+gui_app.use(express.static("app/css"));
+gui_app.use(express.static("app/js"));
+gui_app.use(express.static("app/img"));
+gui_app.use(express.static("app/fonts"));
+gui_app.use(express.static("app/index.html"));
+gui_app.use(express.static("app/favicon.ico"));
+
 gui_app.get("/", function (req, res) {
-  res.send("Hello World!");
+  // Serve the GUI from app folder
+  // Also serve .css and .js files
+  
+  res.sendFile("index.html");
 });
 
 plugin_app.get("/", function (req, res) {
