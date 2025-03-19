@@ -14,7 +14,7 @@ const map = new maplibregl.Map({
         // For standard Z/X/Y tile APIs or Z/X/Y URLs served from go-pmtiles, replace "url" with "tiles" and remove all the pmtiles-related client code.
         // tiles: ["https://example.com/{z}/[x}/{y}.mvt"],
         // see https://maplibre.org/maplibre-style-spec/sources/#vector
-        url: "pmtiles://belgium.pmtiles",
+        url: "pmtiles://http://127.0.0.1:3000/belgium.pmtiles",
       },
     },
     layers: [
