@@ -1,9 +1,12 @@
 var express = require("express");
 var gui_app = express();
 var plugin_app = express();
-var gui_port = 8080;
-var plugin_port = 8081;
 
+const GUI_PORT = process.env.GUI_PORT || 8080;
+const PLUGIN_PORT = process.env.PLUGIN_PORT || 8081;
+
+var gui_port = GUI_PORT;
+var plugin_port = PLUGIN_PORT;
 
 gui_app.use(express.static("app"));
 gui_app.use(express.static("app/css"));

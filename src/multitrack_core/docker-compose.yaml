@@ -1,0 +1,15 @@
+services:
+  multitrack_core:
+    image: multitrack_core:latest
+    container_name: multitrack_core
+    build:
+      context: .
+    restart: unless-stopped
+    tty: true
+    stdin_open: true
+    environment:
+      - "GUI_PORT=8000"
+      - "PLUGIN_PORT=8081"
+    ports:
+      - "8000:8000"
+      - "8081:8081"
