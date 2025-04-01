@@ -5,7 +5,7 @@ import time
 import random
 
 PUBLISH_IP = os.getenv('PUBLISH_IP', '127.0.0.1')
-PUBLISH_PORT = os.getenv('PUBLISH_PORT', '8000')
+PUBLISH_PORT = os.getenv('PUBLISH_PORT', '8081')
 LISTEN_PORT = os.getenv('LISTEN_PORT', '80')
 
 print(f"PUBLISH_PORT: {PUBLISH_PORT}")
