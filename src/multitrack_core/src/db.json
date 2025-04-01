@@ -1,0 +1,35 @@
+{
+  "main-id": {
+    "type": "identify_plugin",
+    "main_ID": "main-id",
+    "actions": ["different", "actions", "here"],
+    "text": true,
+    "position": true,
+    "status": true,
+    "entities": {
+      "sn0000" : {
+        "type": "device",
+        "model": "model",
+        "serial": "sn0000",
+        "last_updated": "",
+        "position": {
+            "timestamp": 1743512989,
+            "latitude": 50.8335,
+            "longitude": 4.36464
+        },
+        "text" : [
+          {
+            "timestamp": 1743513001,
+            "text": "Hello world"
+          }
+        ],
+        "status" : [
+          {
+            "timestamp": 1743513094,
+            "status": "ok"
+          }
+        ]
+      }
+    }
+  }
+}
