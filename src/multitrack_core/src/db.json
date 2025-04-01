@@ -12,11 +12,13 @@
         "model": "model",
         "serial": "sn0000",
         "last_updated": "",
-        "position": {
+        "positions": [
+          {
             "timestamp": 1743512989,
             "latitude": 50.8335,
             "longitude": 4.36464
-        },
+          }
+        ],
         "text" : [
           {
             "timestamp": 1743513001,
