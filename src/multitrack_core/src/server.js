@@ -89,6 +89,11 @@ plugin_app.post("/unsubscribe", function (req, res) {
 plugin_app.post("/data", function (req, res) {
   // Handle data from plugin
   console.log("Received data from plugin");
+  wss_clients.forEach(function each(client) {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(JSON.stringify(req.body));
+    }
+  });
   res.send("Data received");
 });
 

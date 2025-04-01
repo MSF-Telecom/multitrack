@@ -13,13 +13,26 @@ socket.onopen = function (event) {
 // Event listener for when a message
 //  is received from the server
 socket.onmessage = function (event) {
-  // Get the output div element
-  const outputDiv = document
-    .getElementById('output');
-  // Append a paragraph with the
-  //  received message to the output div
-  outputDiv
-    .innerHTML = `<p>Received <b>"${event.data}"</b> from server.</p>`;
+  // Log the received message
+  var object = JSON.parse(event.data);
+  console.log('Message from server: ', object);
+  // check if marker exists
+  if (markers[object.main_ID+object.serial]) {
+    markers[object.main_ID+object.serial].setLngLat([object.position.longitude, object.position.latitude])
+  }
+  else {
+    markers[object.main_ID+object.serial] = new maplibregl.Marker()
+      .setLngLat([object.position.longitude, object.position.latitude])
+      .setPopup(popup)
+      .addTo(map);
+  }
+  // // Get the output div element
+  // const outputDiv = document
+  //   .getElementById('output');
+  // // Append a paragraph with the
+  // //  received message to the output div
+  // outputDiv
+  //   .innerHTML = `<p>Received <b>"${event.data}"</b> from server.</p>`;
 };
 
 // Event listener for when the 
