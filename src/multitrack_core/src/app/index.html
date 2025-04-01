@@ -48,8 +48,16 @@
       <div id="map"></div>
       <div id="controls">controls</div>
     </div>
+
+    <div>
+      <label>Send Message to Server:</label> <br><br>
+      <input type="text" id="messageInput">
+      <button onclick="sendMessage()">Send</button>
+      <div id="output"></div>
+    </div>
     <script src="map.js"></script>
     <script src="script.js"></script>
+    <script src="socket.js"></script>
     <script src="darkswitch.js"></script>
   </body>
 </html>
