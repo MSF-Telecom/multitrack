@@ -40,7 +40,7 @@ def post_identify_plugin():
         "position": True,
         "status": True
     }
-    x = requests.post(url, json = myobj)
+    x = requests.post(url+"subscribe", json = myobj)
     print(x.text)
 
 def post_data():
@@ -92,7 +92,7 @@ def post_data():
                     "longitude": position["longitude"]
                 }
             }
-            x = requests.post(url, json = myobj)
+            x = requests.post(url+"data", json = myobj)
             print(x.text)
             time.sleep(2)
         for text in dataSource[key]["texts"]:
@@ -104,7 +104,7 @@ def post_data():
                 "last_updated": int(time.time()),
                 "text": text
             }
-            x = requests.post(url, json = myobj)
+            x = requests.post(url+"data", json = myobj)
             print(x.text)
             time.sleep(2)
         for status in dataSource[key]["statuses"]:
@@ -116,7 +116,7 @@ def post_data():
                 "status": status,
                 "last_updated": int(time.time())
             }
-            x = requests.post(url, json = myobj)
+            x = requests.post(url+"data", json = myobj)
             print(x.text)
             time.sleep(2)
 
