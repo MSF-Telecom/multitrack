@@ -1,46 +1,40 @@
-// Create a WebSocket instance
-// and connect to the server
 const socket = new WebSocket('ws://localhost:8001');
 
-// Event listener for when 
-//the WebSocket connection is opened
 socket.onopen = function (event) {
-  // Alert the user that they are 
-  // connected to the WebSocket server
-  alert('You are Connected to WebSocket Server');
+  console.log('You are Connected to WebSocket Server');
+
+  // set border of controls to green
+  document.getElementById('controls').style.border = '1px solid green';
 };
 
-// Event listener for when a message
-//  is received from the server
 socket.onmessage = function (event) {
-  // Log the received message
   var object = JSON.parse(event.data);
-  console.log('Message from server: ', object);
-  // check if marker exists
-  if (markers[object.main_ID+object.serial]) {
-    markers[object.main_ID+object.serial].setLngLat([object.position.longitude, object.position.latitude])
+  // check if object contains "position" key
+  if (object.position) {
+    setMarkerPosition(object);
+    updateMarkers();
+  }
+  // check if object contains "text" key
+  if (object.text) {
+    setNewText(object);
+  }
+  // check if object contains "status" key
+  if (object.status) {
+    setNewStatus(object);
   }
   else {
-    markers[object.main_ID+object.serial] = new maplibregl.Marker()
-      .setLngLat([object.position.longitude, object.position.latitude])
-      .setPopup(popup)
-      .addTo(map);
+    console.log('Unknown object type');
   }
-  // // Get the output div element
-  // const outputDiv = document
-  //   .getElementById('output');
-  // // Append a paragraph with the
-  // //  received message to the output div
-  // outputDiv
-  //   .innerHTML = `<p>Received <b>"${event.data}"</b> from server.</p>`;
+  updateControls();
+  console.log('Message from server: ', object);
 };
 
-// Event listener for when the 
-// WebSocket connection is closed
+
 socket.onclose = function (event) {
-  // Log a message when disconnected
-  //  from the WebSocket server
   console.log('Disconnected from WebSocket server');
+
+  // set border of controls to red
+  document.getElementById('controls').style.border = '1px solid red';
 };
 
 // Function to send a message
@@ -57,4 +51,45 @@ function sendMessage() {
   socket.send(message);
   // Clear the message input
   messageInput.value = '';
+}
+
+function setMarkerPosition(object) {
+  // check if marker exists
+  // if (markers[object.main_ID+"_"+object.serial]) {
+  //   markers[object.main_ID+"_"+object.serial].setLngLat([object.position.longitude, object.position.latitude])
+  // }
+  // else {
+  //   markers[object.main_ID+"_"+object.serial] = new maplibregl.Marker()
+  //     .setLngLat([object.position.longitude, object.position.latitude])
+  //     .setPopup(popup)
+  //     .addTo(map);
+  // }
+  if(!radios[object.main_ID+"_"+object.serial]) {
+    radios[object.main_ID+"_"+object.serial] = object;
+  }
+  else {
+    radios[object.main_ID+"_"+object.serial].position = object.position;
+  }
+}
+
+function setNewText(object) {
+  // handle text
+  console.log(object.main_ID+"_"+object.serial + " : " + object.text);
+  if(!radios[object.main_ID+"_"+object.serial]) {
+    radios[object.main_ID+"_"+object.serial] = object;
+  }
+  else {
+    radios[object.main_ID+"_"+object.serial].text = object.text;
+  }
+}
+
+function setNewStatus(object) {
+  // handle status
+  console.log(object.main_ID+"_"+object.serial + " : " + object.status);
+  if(!radios[object.main_ID+"_"+object.serial]) {
+    radios[object.main_ID+"_"+object.serial] = object;
+  }
+  else {
+    radios[object.main_ID+"_"+object.serial].status = object.status;
+  }
 }
