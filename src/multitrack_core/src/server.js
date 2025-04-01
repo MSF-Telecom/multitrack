@@ -28,6 +28,24 @@ plugin_app.get("/", function (req, res) {
   res.send("Hello World from plugin sink!");
 });
 
+plugin_app.post("/subscribe", function (req, res) {
+  // Handle subscription to plugin
+  console.log("Received subscription request");
+  res.send("Subscription successful");
+});
+
+plugin_app.post("/unsubscribe", function (req, res) {
+  // Handle unsubscription from plugin
+  console.log("Received unsubscription request");
+  res.send("Unsubscription successful");
+});
+
+plugin_app.post("/data", function (req, res) {
+  // Handle data from plugin
+  console.log("Received data from plugin");
+  res.send("Data received");
+});
+
 gui_app.listen(gui_port, function () {
   console.log("Listening on gui port " + gui_port);
 });
