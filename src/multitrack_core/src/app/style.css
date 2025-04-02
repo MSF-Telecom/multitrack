@@ -88,4 +88,7 @@ a {
     #controls {
         max-width: 100%;
     }
+    #map {
+        min-height: 50vh;
+    }
 }
