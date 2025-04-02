@@ -1,4 +1,4 @@
-const socket = new WebSocket('ws://localhost:8001');
+let socket = new WebSocket('ws://localhost:8001');
 
 socket.onopen = function (event) {
   console.log('You are Connected to WebSocket Server');
@@ -35,6 +35,11 @@ socket.onclose = function (event) {
 
   // set border of controls to red
   document.getElementById('controls').style.border = '1px solid red';
+
+  // try to reconnect every 5 seconds
+  setTimeout(function () {
+    socket = new WebSocket('ws://localhost:8001');
+  }, 5000);
 };
 
 // Function to send a message
@@ -54,16 +59,6 @@ function sendMessage() {
 }
 
 function setMarkerPosition(object) {
-  // check if marker exists
-  // if (markers[object.main_ID+"_"+object.serial]) {
-  //   markers[object.main_ID+"_"+object.serial].setLngLat([object.position.longitude, object.position.latitude])
-  // }
-  // else {
-  //   markers[object.main_ID+"_"+object.serial] = new maplibregl.Marker()
-  //     .setLngLat([object.position.longitude, object.position.latitude])
-  //     .setPopup(popup)
-  //     .addTo(map);
-  // }
   if(!radios[object.main_ID+"_"+object.serial]) {
     radios[object.main_ID+"_"+object.serial] = object;
   }
@@ -81,6 +76,14 @@ function setNewText(object) {
   else {
     radios[object.main_ID+"_"+object.serial].text = object.text;
   }
+
+  // check if position exists
+  if(!radios[object.main_ID+"_"+object.serial].position) {
+    radios[object.main_ID+"_"+object.serial].position = {
+      latitude: 0,
+      longitude: 0
+    };
+  }
 }
 
 function setNewStatus(object) {
@@ -91,5 +94,13 @@ function setNewStatus(object) {
   }
   else {
     radios[object.main_ID+"_"+object.serial].status = object.status;
+  }
+
+  // check if position exists
+  if(!radios[object.main_ID+"_"+object.serial].position) {
+    radios[object.main_ID+"_"+object.serial].position = {
+      latitude: NaN,
+      longitude: NaN
+    };
   }
 }

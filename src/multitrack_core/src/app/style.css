@@ -64,6 +64,20 @@ a {
     border: 1px solid red;
     border-radius: 10px;
     max-width: 25%;
+    overflow: scroll;
+    /* set height the same as map */
+    height: 65vh;
+}
+
+.radio_controls {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin : 5px;
+    padding: 10px;
+    border: #808080 1px solid;
+    border-radius: 5px;
 }
 
 /* CSS for Mobile devices */
