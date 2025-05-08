@@ -8,10 +8,12 @@ services:
         privileged: true
         tty: true
         stdin_open: true
-        network_mode: host
+        network_mode: bridge
         ipc: host
         pid: host
         environment:
-            - "PUBLISH_IP=127.0.0.1"
+            - "PUBLISH_IP=multitrack_core"
             - "PUBLISH_PORT=8081"
             - "LISTEN_PORT=8500"
+        ports:
+            - "8500:8500"
