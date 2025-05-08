@@ -30,7 +30,85 @@ gui_wss.on('connection', function connection(ws) {
   console.log('Client connected : ' + ws._socket.remoteAddress);
   ws.on('message', function incoming(message) {
     console.log('received: %s', message);
-    ws.send(`${message}`);
+    // check if message has "message_type" key
+    if (message.includes("message_type")) {
+      message = JSON.parse(message);
+      console.log("Message type : " + message.message_type);
+      if (message.message_type == "device_text") {
+        // send HTTP post to main_ID:plugin_port
+        db = require("./db.json");
+        if (!db[message.main_ID]) {
+          console.log("No main_ID found in db.json");
+          return;
+        }
+        console.log("Sending text message to plugin : " + message.text);
+        if (db[message.main_ID].plugin_port == 0) {
+          console.log("No plugin port found for main_ID : " + message.main_ID);
+          return;
+        }
+        const options = {
+          hostname: message.main_ID,
+          port: db[message.main_ID].listen_port,
+          path: '/text',
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        };
+        const req = require('http').request(options, (res) => {
+          console.log(`STATUS: ${res.statusCode}`);
+          res.setEncoding('utf8');
+          res.on('data', (chunk) => {
+            console.log(`BODY: ${chunk}`);
+          });
+        });
+        req.on('error', (e) => {
+          console.error(`problem with request: ${e.message}`);
+        });
+        req.write(JSON.stringify(message));
+        req.end();
+        console.log("Message sent to plugin : " + message.main_ID);
+      }
+      
+      if (message.message_type == "device_action") {
+        // send HTTP post to main_ID:plugin_port
+        db = require("./db.json");
+        if (!db[message.main_ID]) {
+          console.log("No main_ID found in db.json");
+          return;
+        }
+        console.log("Sending action message to plugin : " + message.action);
+        if (db[message.main_ID].plugin_port == 0) {
+          console.log("No plugin port found for main_ID : " + message.main_ID);
+          return;
+        }
+        const options = {
+          hostname: message.main_ID,
+          port: db[message.main_ID].listen_port,
+          path: '/action',
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        };
+        const req = require('http').request(options, (res) => {
+          console.log(`STATUS: ${res.statusCode}`);
+          res.setEncoding('utf8');
+          res.on('data', (chunk) => {
+            console.log(`BODY: ${chunk}`);
+          });
+        });
+        req.on('error', (e) => {
+          console.error(`problem with request: ${e.message}`);
+        });
+        req.write(JSON.stringify(message));
+        req.end();
+
+        console.log("Message sent to plugin : " + message.main_ID);
+      }
+
+    }
+    //ws.send(`${message}`);
   });
 
   ws.on('close', function() {
@@ -66,15 +144,27 @@ plugin_app.post("/subscribe", function (req, res) {
   // Open db.json file and add subscription
   console.log(req.body);
   db = require("./db.json");
-  db[req.body.main_ID] = {
-    type : req.body.type,
-    main_ID : req.body.main_ID,
-    actions : req.body.actions,
-    text : req.body.text,
-    position : req.body.position,
-    status : req.body.status,
-    entities : {}
-  };
+  if (!db[req.body.main_ID]) {
+    db[req.body.main_ID] = {
+      type : req.body.type,
+      main_ID : req.body.main_ID,
+      actions : req.body.actions,
+      text : req.body.text,
+      position : req.body.position,
+      status : req.body.status,
+      listen_port : req.body.listen_port,
+      entities : {}
+    };
+  }
+  else {
+    // update each entity key, or add it if it does not exist
+    for (const key in req.body) {
+      if (key !== "main_ID" && key !== "serial") {
+        db[req.body.main_ID][key] = req.body[key];
+      }
+    }
+  }
+  
   console.log("db : ", db);
   console.log("Received subscription request Got source : " + req.body.main_ID);
   res.send("Subscription successful ! Got source : " + req.body.main_ID);
@@ -89,9 +179,26 @@ plugin_app.post("/unsubscribe", function (req, res) {
 plugin_app.post("/data", function (req, res) {
   // Handle data from plugin
   console.log("Received data from plugin");
+
+  // add data to db.json file
+  db = require("./db.json");
+  if (!db[req.body.main_ID]) {
+    console.log("No main_ID found in db.json");
+  }
+  if (!db[req.body.main_ID].entities[req.body.serial]) {
+    db[req.body.main_ID].entities[req.body.serial] = req.body;
+  } else {
+    // update each entity key, or add it if it does not exist
+    for (const key in req.body) {
+      if (key !== "main_ID" && key !== "serial") {
+        db[req.body.main_ID].entities[req.body.serial][key] = req.body[key];
+      }
+    }
+  }
+
   wss_clients.forEach(function each(client) {
     if (client.readyState === WebSocket.OPEN) {
-      client.send(JSON.stringify(req.body));
+      client.send("DATABASE"+JSON.stringify(db));
     }
   });
   res.send("Data received");

@@ -80,6 +80,11 @@ a {
     border-radius: 5px;
 }
 
+#action_buttons {
+    display: flex;
+    float: left;
+}
+
 /* CSS for Mobile devices */
 @media (max-width: 800px) {
     .container {

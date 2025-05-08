@@ -8,25 +8,41 @@ socket.onopen = function (event) {
 };
 
 socket.onmessage = function (event) {
-  var object = JSON.parse(event.data);
-  // check if object contains "position" key
-  if (object.position) {
-    setMarkerPosition(object);
+  // check if message begins with "DATABASE"
+  if (event.data.startsWith("DATABASE")) {
+    // get the database
+    var database = event.data.split("DATABASE")[1];
+    // parse the database
+    var database = JSON.parse(database);
+    // check if database is empty
+    if (Object.keys(database).length === 0) {
+      console.log('Database is empty');
+      return;
+    }
+    db = database;
+    // var object = JSON.parse(event.data);
+    // // check if object contains "position" key
+    // if (object.position) {
+    //   setMarkerPosition(object);
+    //   updateMarkers();
+    // }
+    // // check if object contains "text" key
+    // if (object.text) {
+    //   setNewText(object);
+    // }
+    // // check if object contains "status" key
+    // if (object.status) {
+    //   setNewStatus(object);
+    // }
+    // // check if object contains "actions" key
+    // if (object.actions) {
+    //   setNewActions(object);
+    // }
+
+    updateControls();
     updateMarkers();
+    console.log('Message from server: ', database);
   }
-  // check if object contains "text" key
-  if (object.text) {
-    setNewText(object);
-  }
-  // check if object contains "status" key
-  if (object.status) {
-    setNewStatus(object);
-  }
-  else {
-    console.log('Unknown object type');
-  }
-  updateControls();
-  console.log('Message from server: ', object);
 };
 
 
@@ -80,8 +96,8 @@ function setNewText(object) {
   // check if position exists
   if(!radios[object.main_ID+"_"+object.serial].position) {
     radios[object.main_ID+"_"+object.serial].position = {
-      latitude: 0,
-      longitude: 0
+      latitude: NaN,
+      longitude: NaN
     };
   }
 }
@@ -96,6 +112,24 @@ function setNewStatus(object) {
     radios[object.main_ID+"_"+object.serial].status = object.status;
   }
 
+  // check if position exists
+  if(!radios[object.main_ID+"_"+object.serial].position) {
+    radios[object.main_ID+"_"+object.serial].position = {
+      latitude: NaN,
+      longitude: NaN
+    };
+  }
+}
+
+function setNewActions(object) {
+  // handle actions
+  console.log(object.main_ID+"_"+object.serial + " : " + object.actions);
+  if(!radios[object.main_ID+"_"+object.serial]) {
+    radios[object.main_ID+"_"+object.serial] = object;
+  }
+  else {
+    radios[object.main_ID+"_"+object.serial].actions = object.actions;
+  }
   // check if position exists
   if(!radios[object.main_ID+"_"+object.serial].position) {
     radios[object.main_ID+"_"+object.serial].position = {
