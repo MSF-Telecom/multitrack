@@ -1,4 +1,5 @@
-let socket = new WebSocket('ws://localhost:8001');
+let socket_hostname = window.location.hostname
+let socket = new WebSocket('ws://' + socket_hostname + ':8001');
 
 socket.onopen = function (event) {
   console.log('You are Connected to WebSocket Server');
@@ -54,7 +55,7 @@ socket.onclose = function (event) {
 
   // try to reconnect every 5 seconds
   setTimeout(function () {
-    socket = new WebSocket('ws://localhost:8001');
+    socket = new WebSocket('ws://'+ hostname + ':8001');
   }, 5000);
 };
 
