@@ -40,6 +40,28 @@ services:
     ports:
         - "8500:8500"
 
+  nxdn_source:
+    image: nxdn_source:latest
+    container_name: nxdn_source
+    build:
+        context: ./nxdn_source
+    restart: unless-stopped
+    privileged: true
+    tty: true
+    stdin_open: true
+    networks:
+      - multitrack_network
+    ipc: host
+    pid: host
+    environment:
+        - "PUBLISH_IP=multitrack_core"
+        - "PUBLISH_PORT=8081"
+        - "LISTEN_PORT=8600"
+    ports:
+        - "8600:8600"
+    devices:
+        - /dev/tty.PL2303-USBtoUART21130:/dev/tty.PL2303-USBtoUART21130
+
 networks:
   multitrack_network:
     driver: bridge
