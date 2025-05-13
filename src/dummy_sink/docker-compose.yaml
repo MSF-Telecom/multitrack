@@ -11,6 +11,3 @@ services:
       - "LISTEN_PORT=8000"
     ports:
       - "8000:8000"
-    # command: [ "/bin/bash", "-c", "ros2 launch bms_node launch.py" ]
-    # volumes:
-    #     - /dev:/dev:rw
