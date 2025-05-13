@@ -1,3 +1,6 @@
 [submodule "python/lib/PyCCMDV2"]
 	path = python/lib/PyCCMDV2
 	url = https://github.com/MSF-Telecom/PyCCMDV2.git
+[submodule "src/nxdn_source/src/PyCCMDV2"]
+	path = src/nxdn_source/src/PyCCMDV2
+	url = https://github.com/MSF-Telecom/PyCCMDV2.git
