@@ -68,8 +68,9 @@ function updateControls() {
 
       div.appendChild(document.createTextNode(`Type: ${radio.type} Model: ${radio.model} Serial: ${radio.serial}`));
       div.appendChild(document.createElement('br'));
-
-      div.appendChild(document.createTextNode(`Last updated: ${radio.last_updated} Position: ${radio.position.latitude}, ${radio.position.longitude}`));
+      const d = new Date(radio.last_updated * 1000)
+      
+      div.appendChild(document.createTextNode(`Last updated:  ${d.toLocaleString()} Position: ${radio.position.latitude}, ${radio.position.longitude}`));
       div.appendChild(document.createElement('br'));
 
       div.appendChild(document.createTextNode(`Text: ${radio.text} Status: ${radio.status}`));
