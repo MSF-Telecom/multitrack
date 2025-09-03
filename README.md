@@ -8,7 +8,7 @@ Multitrack is an open-source software that passes commands/messages from radios 
 
 This initial version is able to connect to an ICOM radio (IDAS/NXDN or dPMR), parse the GPS positions received and send them to Traccar. It handles various cases such as channel changes. Text messaging isn't implemented yet, nor are positions requests (at this time).
 
-## User setup
+## User setup - ONLY FOR PROOF OF CONCEPT (Documentation coming soon)
 
 No one-click setup is available just yet. However, the process is quite straightforward
 
