@@ -21,6 +21,8 @@ print(f"LISTEN_PORT: {LISTEN_PORT}")
 url = 'http://'+PUBLISH_IP+':'+PUBLISH_PORT+'/'
 myobj = {}
 
+# Temporary PyCCMD Mutex, should be handled in the PyCCMD library
+pyccmd_mutex = threading.Lock()
 
 radioSerial = serial.Serial('/dev/ttyUSB0', 9600, timeout = 2)
 
@@ -89,7 +91,10 @@ local_radio_database = {
 
 def post_data():
     #print(radio.sendStatus(24, otherID=otherID, verbose=True))
-    r= radio.receiveMessage(timeout = 2, verbose=True)
+    # lock the mutex
+    pyccmd_mutex.acquire()
+    r = radio.receiveMessage(timeout = 2, verbose=True)
+    pyccmd_mutex.release()
     if r.messageType=='GPS':        
         print('[RADIO] Got a position frame from:', r.senderID)
         print(r.messageContents)
@@ -166,7 +171,10 @@ def text():
 
     if main_ID == "nxdn_source":
         print(f"Sending \"{text}\" to {serial}")
+        # check the mutex and lock it
+        pyccmd_mutex.acquire()
         radio.sendMessage(text, otherID=int(serial), verbose=True)
+        pyccmd_mutex.release()
     return 'OK', 200
 
 @app.route('/action', methods=['POST'])
@@ -182,15 +190,21 @@ def action():
     if main_ID == "nxdn_source":
         if action == "stun":
             print(f"Stunning {serial}")
+            pyccmd_mutex.acquire()
             radio.sendCommand("*SET,IDAS,TXSTUN,IND,"+str(serial))
+            pyccmd_mutex.release()
         elif action == "kill":
             print(f"Killing {serial}")
         elif action == "revive":
             print(f"Reviving {serial}")
+            pyccmd_mutex.acquire()
             radio.sendCommand("*SET,IDAS,TXREVIVE,IND,"+str(serial))
+            pyccmd_mutex.release()
         elif action == "get position":
             print(f"Requesting position for {serial}")
+            pyccmd_mutex.acquire()
             radio.sendStatus(24, otherID=int(serial), verbose=True)
+            pyccmd_mutex.release()
         else:
             print(f"Unknown action {action} for {serial}")
 
