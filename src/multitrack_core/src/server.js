@@ -2,7 +2,6 @@ var express = require("express");
 var gui_app = express();
 var plugin_app = express();
 const WebSocket = require('ws');
-var request = require('request');
 
 const GUI_PORT = process.env.GUI_PORT || 8000;
 const GUI_WSS_PORT = process.env.GUI_WSS_PORT || 8001;
@@ -123,12 +122,6 @@ gui_app.get("/", function (req, res) {
   // Also serve .css and .js files
   
   res.sendFile("index.html");
-});
-
-gui_app.get("/map", function (req, res) {
-  // Should receive something like pmtiles://http://host:8000/map/map.pmtiles
-  // forward to pmtiles://http://host:3000/map.pmtiles
-  request('http://localhost:3000/').pipe(res);
 });
 
 gui_app.get("/ping", function (req, res) {
