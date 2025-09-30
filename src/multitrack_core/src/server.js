@@ -2,6 +2,7 @@ var express = require("express");
 var gui_app = express();
 var plugin_app = express();
 const WebSocket = require('ws');
+var request = require('request');
 
 const GUI_PORT = process.env.GUI_PORT || 8000;
 const GUI_WSS_PORT = process.env.GUI_WSS_PORT || 8001;
