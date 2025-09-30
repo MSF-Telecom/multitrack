@@ -82,6 +82,11 @@ def post_identify_plugin():
     # x = requests.post(url+"data", json = myobj)
     # print(x.text)
 
+# Quick tape fix, should be handled in another way later
+# db = { "id" : {"position" = true}}
+local_radio_database = {
+}
+
 def post_data():
     #print(radio.sendStatus(24, otherID=otherID, verbose=True))
     r= radio.receiveMessage(timeout = 2, verbose=True)
@@ -91,6 +96,12 @@ def post_data():
         rawPosition = r.messageContents #"$GNRMC,071146.00,A,5050.0254,N,00421.8703,E,0.0,90.0,130525,,,A*74"
         nmeaData = pynmea2.parse(rawPosition)
         print("NMEA : ", nmeaData.latitude, nmeaData.longitude)
+        # add to local db if not in db
+        if r.senderID not in local_radio_database:
+            local_radio_database[r.senderID] = {"position": True}
+        # else set position to true
+        else:
+            local_radio_database[r.senderID]["position"] = True
 
         myobj = {
                 "type": "device",
@@ -112,20 +123,24 @@ def post_data():
     elif r.messageType=='RXV':
         print('[RADIO] Got a position frame from:', r.senderID)
         print(r.messageContents)
-        myobj = {
-                "type": "device",
-                "main_ID": "nxdn_source",
-                "model": "portable",
-                "serial": str(r.senderID),
-                "last_updated": int(time.time()),
-                "position": {
-                    "timestamp": int(time.time()),
-                    "latitude": None,
-                    "longitude": None
+        if r.senderID not in local_radio_database:
+            local_radio_database[r.senderID] = {"position": False}
+        
+        if local_radio_database[r.senderID]["position"] == False:
+            myobj = {
+                    "type": "device",
+                    "main_ID": "nxdn_source",
+                    "model": "portable",
+                    "serial": str(r.senderID),
+                    "last_updated": int(time.time()),
+                    "position": {
+                        "timestamp": int(time.time()),
+                        "latitude": None,
+                        "longitude": None
+                    }
                 }
-            }
-        x = requests.post(url+"data", json = myobj)
-        print(x.text)
+            x = requests.post(url+"data", json = myobj)
+            print(x.text)
 
 
 
