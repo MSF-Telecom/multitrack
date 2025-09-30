@@ -124,6 +124,12 @@ gui_app.get("/", function (req, res) {
   res.sendFile("index.html");
 });
 
+gui_app.get("/map", function (req, res) {
+  // Should receive something like pmtiles://http://host:8000/map/map.pmtiles
+  // forward to pmtiles://http://host:3000/map.pmtiles
+  request('http://localhost:3000/').pipe(res);
+});
+
 gui_app.get("/ping", function (req, res) {
   // Handle ping from plugin
   console.log("Received ping from plugin");
