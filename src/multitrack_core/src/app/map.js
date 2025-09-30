@@ -4,6 +4,11 @@ maplibregl.addProtocol("pmtiles", protocol.tile);
 
 let map_hostname = window.location.hostname;
 
+navigator.geolocation.getCurrentPosition(function (location)
+{
+  console.log("USER POSITION : " + JSON.stringify(location, null, 4));
+})
+
 const map = new maplibregl.Map({
   container: "map",
   zoom: 7,
@@ -63,14 +68,6 @@ const map = new maplibregl.Map({
   },
 });
 //map.showTileBoundaries = true;
-
-const popup = new maplibregl.Popup({ offset: 25 }).setHTML(
-  'Test popup : <a href="http://crouton.net">link</a>'
-);
-const marker = new maplibregl.Marker()
-  .setLngLat([4.36464, 50.8335])
-  .setPopup(popup)
-  .addTo(map);
 
 map.addControl(
   new maplibregl.NavigationControl({
