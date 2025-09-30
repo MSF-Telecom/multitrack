@@ -117,7 +117,12 @@ def post_data():
                 "main_ID": "nxdn_source",
                 "model": "portable",
                 "serial": str(r.senderID),
-                "last_updated": int(time.time())
+                "last_updated": int(time.time()),
+                "position": {
+                    "timestamp": int(time.time()),
+                    "latitude": None,
+                    "longitude": None
+                }
             }
         x = requests.post(url+"data", json = myobj)
         print(x.text)
