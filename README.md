@@ -4,6 +4,21 @@
 
 Multitrack is an open-source software that passes commands/messages from radios (via and RS232 interface) to tracking/dispatching sytems.
 
+## Table of Contents
+
+- [Overview](#overview)
+- [Features](#features)
+- [User setup](#user-setup)
+  - [Requirements](#requirements)
+  - [Getting Multitrack Core running](#getting-multitrack-core-running)
+  - [Getting the maptiles server running](#getting-the-maptiles-server-running)
+  - [Getting the sources running](#getting-the-sources-running)
+- [Troubleshooting](#troubleshooting)
+  - [Multitrack Core and Sources](#multitrack-core-and-sources)
+- [Dev notes](#dev-notes)
+- [Roadmap](#roadmap)
+- [Acknowledgements](#acknowledgements)
+
 ## Features
 
 This initial version is able to connect to an ICOM radio (IDAS/NXDN or dPMR), parse the GPS positions received and send them to a web interface. Text messaging, positions requests, and Stun/Revive commands are also supported.
@@ -21,7 +36,7 @@ A Docker-Compose file with Multitrack core, a dummy source, and an NXDN source i
 ### Getting the maptiles server running
 
 A Docker container is available in the src folder (maptiles_server). There is a docker-compose file to run it.  
-You'll also need to poiint to a folder where a `map.pmtiles` file is available.
+You'll also need to point to a folder where a `map.pmtiles` file is available.
 
 ### Getting the sources running
 
@@ -37,7 +52,7 @@ No logfiles are implemented yet. However, the console's output will help in narr
 
 ## Dev notes
 
-This initial version has been developed on macOS with docker, and a demo server on an ubuntu VM on, proxmox, as well as docker on a Raspberry Pi CM4.
+This initial version has been developed on macOS with docker, and a demo server on an ubuntu VM on proxmox, as well as docker on a Raspberry Pi CM4.
 
 Tools used:
 
