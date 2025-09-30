@@ -22,7 +22,7 @@ url = 'http://'+PUBLISH_IP+':'+PUBLISH_PORT+'/'
 myobj = {}
 
 
-radioSerial = serial.Serial('/dev/tty.PL2303-USBtoUART21130', 9600, timeout = 2)
+radioSerial = serial.Serial('/dev/ttyUSB0', 9600, timeout = 2)
 
 ownID = 65501
 talkgroupID = 1
