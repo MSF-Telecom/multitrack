@@ -188,6 +188,9 @@ def action():
         elif action == "revive":
             print(f"Reviving {serial}")
             radio.sendCommand("*SET,IDAS,TXREVIVE,IND,"+str(serial))
+        elif action == "get position":
+            print(f"Requesting position for {serial}")
+            radio.sendStatus(24, otherID=int(serial), verbose=True)
         else:
             print(f"Unknown action {action} for {serial}")
 
