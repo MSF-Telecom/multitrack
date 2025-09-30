@@ -1,9 +1,5 @@
 console.log('Hello from script.js!')
 
-const popup2 = new maplibregl.Popup({ offset: 25 }).setHTML(
-  'Test popup2 : <a href="http://crouton.net">link</a>'
-);
-
 // let radios = {
 //   "main-id_sn0000": {
 //     "main_ID": "main-id",
@@ -230,11 +226,3 @@ function setMarkerColor(marker, color) {
 };
 
 updateControls();
-
-setTimeout(() => {
-  markers["WolStPi"] = new maplibregl.Marker()
-    .setLngLat([4.46464, 50.8335])
-    .setPopup(popup2)
-    .addTo(map);
-  updateMarkers();
-}, 1000);
