@@ -44,7 +44,7 @@ The instructions for each plugin is available in their respective folders/repos.
 
 ## Troubleshooting
 
-Most common errors are either a wrong COM port, bad radio configuration or absent traccar entry for the radio you wish to track. Most of them can be narrowed down by looking in the logfiles.
+Most common errors are either a wrong COM port, bad radio configuration, or docker network setting errors. Most of them can be narrowed down by looking in the logfiles.
 
 ### Multitrack Core and Sources
 
