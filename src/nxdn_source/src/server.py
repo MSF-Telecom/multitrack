@@ -92,9 +92,12 @@ local_radio_database = {
 def post_data():
     #print(radio.sendStatus(24, otherID=otherID, verbose=True))
     # lock the mutex
+    while pyccmd_mutex.locked():
+        time.sleep(0.1)
     pyccmd_mutex.acquire()
     r = radio.receiveMessage(timeout = 2, verbose=True)
     pyccmd_mutex.release()
+    time.sleep(0.1)
     if r.messageType=='GPS':        
         print('[RADIO] Got a position frame from:', r.senderID)
         print(r.messageContents)
@@ -171,6 +174,9 @@ def text():
 
     if main_ID == "nxdn_source":
         print(f"Sending \"{text}\" to {serial}")
+        # Check mutex status
+        while pyccmd_mutex.locked():
+            time.sleep(0.1)
         # check the mutex and lock it
         pyccmd_mutex.acquire()
         radio.sendMessage(text, otherID=int(serial), verbose=True)
@@ -190,6 +196,8 @@ def action():
     if main_ID == "nxdn_source":
         if action == "stun":
             print(f"Stunning {serial}")
+            while pyccmd_mutex.locked():
+                time.sleep(0.1)
             pyccmd_mutex.acquire()
             radio.sendCommand("*SET,IDAS,TXSTUN,IND,"+str(serial))
             pyccmd_mutex.release()
@@ -197,11 +205,15 @@ def action():
             print(f"Killing {serial}")
         elif action == "revive":
             print(f"Reviving {serial}")
+            while pyccmd_mutex.locked():
+                time.sleep(0.1)
             pyccmd_mutex.acquire()
             radio.sendCommand("*SET,IDAS,TXREVIVE,IND,"+str(serial))
             pyccmd_mutex.release()
         elif action == "get position":
             print(f"Requesting position for {serial}")
+            while pyccmd_mutex.locked():
+                time.sleep(0.1)
             pyccmd_mutex.acquire()
             radio.sendStatus(24, otherID=int(serial), verbose=True)
             pyccmd_mutex.release()
