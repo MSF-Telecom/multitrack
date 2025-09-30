@@ -180,6 +180,7 @@ def text():
         # check the mutex and lock it
         pyccmd_mutex.acquire()
         radio.sendMessage(text, otherID=int(serial), verbose=True)
+        radio.setRadioID(ownID,talkgroupID) # TODO : check if needed/fix in library (Radio ID resets after sending a message)
         pyccmd_mutex.release()
     return 'OK', 200
 
