@@ -109,6 +109,19 @@ def post_data():
     elif r.messageType=='CH':
         print('[RADIO] Channel changed! Resetting sender ID')
         radio.setRadioID(ownID,talkgroupID)
+    elif r.messageType=='RXV':
+        print('[RADIO] Got a position frame from:', r.senderID)
+        print(r.messageContents)
+        myobj = {
+                "type": "device",
+                "main_ID": "nxdn_source",
+                "model": "portable",
+                "serial": str(r.senderID),
+                "last_updated": int(time.time())
+            }
+        x = requests.post(url+"data", json = myobj)
+        print(x.text)
+
 
 
 # create flask server that listens on LISTEN_PORT
