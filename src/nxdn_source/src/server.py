@@ -66,21 +66,21 @@ def post_identify_plugin():
     print(x.text)
     time.sleep(2)
 
-    myobj = {
-        "type": "device",
-        "main_ID": "nxdn_source",
-        "model": "portable",
-        "serial": "376602001634",
-        "last_updated": int(time.time()),
-        "position": {
-            "timestamp": int(time.time()),
-            "latitude": 50,
-            "longitude": 5
-        }
-    }
+    # myobj = {
+    #     "type": "device",
+    #     "main_ID": "nxdn_source",
+    #     "model": "portable",
+    #     "serial": "376602001634",
+    #     "last_updated": int(time.time()),
+    #     "position": {
+    #         "timestamp": int(time.time()),
+    #         "latitude": 50,
+    #         "longitude": 5
+    #     }
+    # }
 
-    x = requests.post(url+"data", json = myobj)
-    print(x.text)
+    # x = requests.post(url+"data", json = myobj)
+    # print(x.text)
 
 def post_data():
     #print(radio.sendStatus(24, otherID=otherID, verbose=True))
@@ -96,7 +96,7 @@ def post_data():
                 "type": "device",
                 "main_ID": "nxdn_source",
                 "model": "portable",
-                "serial": "376602001634",
+                "serial": str(r.senderID),
                 "last_updated": int(time.time()),
                 "position": {
                     "timestamp": int(time.time()),
@@ -166,6 +166,7 @@ def send_data():
 if __name__ == '__main__':
     # start flask app in background thread
     threading.Thread(target=create_flask_app).start()
+    post_identify_plugin()
 
     # keep the main thread alive
     while True:
