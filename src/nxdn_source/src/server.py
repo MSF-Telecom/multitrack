@@ -121,7 +121,7 @@ def post_data():
         print('[RADIO] Channel changed! Resetting sender ID')
         radio.setRadioID(ownID,talkgroupID)
     elif r.messageType=='RXV':
-        print('[RADIO] Got a position frame from:', r.senderID)
+        print('[RADIO] Got a call frame from:', r.senderID)
         print(r.messageContents)
         if r.senderID not in local_radio_database:
             local_radio_database[r.senderID] = {"position": False}
