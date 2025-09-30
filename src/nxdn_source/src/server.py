@@ -118,18 +118,21 @@ app = Flask(__name__)
 @app.route('/', methods=['POST'])
 def data():
     # print the data received
+    print("Got unmarked data !")
     print(request.json)
     return 'OK', 200
 
 @app.route('/text', methods=['POST'])
 def text():
     # print the data received
+    print("Got text !")
     print(request.json)
     return 'OK', 200
 
 @app.route('/action', methods=['POST'])
 def action():
     # print the data received
+    print("Got action !")
     print(request.json)
 
     main_ID = request.json["main_ID"]
