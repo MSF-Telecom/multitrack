@@ -1,4 +1,4 @@
-# multitrack
+# Multitrack
 
 ## Overview
 
@@ -6,86 +6,60 @@ Multitrack is an open-source software that passes commands/messages from radios 
 
 ## Features
 
-This initial version is able to connect to an ICOM radio (IDAS/NXDN or dPMR), parse the GPS positions received and send them to Traccar. It handles various cases such as channel changes. Text messaging isn't implemented yet, nor are positions requests (at this time).
+This initial version is able to connect to an ICOM radio (IDAS/NXDN or dPMR), parse the GPS positions received and send them to a web interface. Text messaging, positions requests, and Stun/Revive commands are also supported.
 
 ## User setup
 
-No one-click setup is available just yet. However, the process is quite straightforward
+### Requirements
 
-### Getting Traccar running
+- Docker & Docker-Compose
 
-- [Download and install](https://www.traccar.org/download/) Traccar locally
-- Restart the computer (or start the traccar service manually)
-- Open a web browser page and browse to: [http://localhost:8082/](http://localhost:8082/)
-- You should be greeted by a traccar welcome page. Create a user and password, login.
-- On the main interface click on the "Add" button (the plus sign). Set a name, and the identifier (Radio ID). Click save.
-- [Refer to Traccar's documentation](https://www.traccar.org/documentation/) for more information on this interface's use.
+### Getting Multitrack Core running
 
-### Getting Multitrack running
+A Docker-Compose file with Multitrack core, a dummy source, and an NXDN source is available in the src folder.
 
-- Make sure you have connected an appropriate radio, with command output enabled (for Icom Radios: PC-CMDV2). Identify the COM port and speed.
-- [Download](https://github.com/MSF-Telecom/multitrack/releases) the latest release of Multitrack.
-- Extract the .zip in an empty folder.
-- Edit config.ini to match your settings (Radio Port and Speed are the most important). Other settings should be left as default.
-- Run main.exe. It should display the radio's serial number. As soon as a GPS position makes it to the radio, you should be notified by a line in the console, and the position should appear on Traccar's interface.
+### Getting the maptiles server running
+
+A Docker container is available in the src folder (maptiles_server). There is a docker-compose file to run it.  
+You'll also need to poiint to a folder where a `map.pmtiles` file is available.
+
+### Getting the sources running
+
+The instructions for each plugin is available in their respective folders/repos.
 
 ## Troubleshooting
 
 Most common errors are either a wrong COM port, bad radio configuration or absent traccar entry for the radio you wish to track. Most of them can be narrowed down by looking in the logfiles.
 
-### Traccar
-
-Logfiles can be found in the default's program folder, under the \log directory.
-
-### Multitrack
+### Multitrack Core and Sources
 
 No logfiles are implemented yet. However, the console's output will help in narrowing down the reason.
 
 ## Dev notes
 
-This initial version has been developed on a Windows 10 computer. However, no issues should come up when running it under Linux or MacOS.
-Here are the tools used:
+This initial version has been developed on macOS with docker, and a demo server on an ubuntu VM on, proxmox, as well as docker on a Raspberry Pi CM4.
 
-- Python 3.12 with pip
+Tools used:
+
+- Python 3.10-12 with pip
 - git
 - Python libraries: pyserial, pynmea2, configparser
-- Traccar
+- NodeJS/NPM
+- ExpressJS
+- Docker & Docker-Compose
 
-After installing and setting up Traccar, the following lines will allow to create a dev environment:
-
-```zsh
-pip install pyserial pynmea2 configparser requests
-git clone https://github.com/MSF-Telecom/multitrack/
-cd multitrack
-```
-
-Optional, create a virtual environment :
-
-```zsh
-python3 -m venv ./venv
-source ./venv/bin/activate
-```
-
-Continue install :
-
-```zsh
-git submodule init
-git submodule update
-cd python
-python main.py
-```
-
-If you wish to update your copy to the latest commit (including its submodules):
-
-```zsh
-git checkout master
-git submodule update --remote --merge
-```
-
-Verbosity levels can be changed in main.py's first lines.
+Some makefiles are available to help with the setup and testing of individual container builds.
 
 ## Roadmap
 
 - Implement an easy-to-use GUI
 - Implement message/SDS handling
-- Implement automatic traccar updates with new messages
+- Implement automatic map GUI updates with new messages
+
+## Acknowledgements
+
+Made with ❤️, lots of ☕️, and lack of 🛌  
+Published under GNU GPLv3 license.
+
+[![License: GPL v3](https://www.gnu.org/graphics/gplv3-127x51.png)](https://www.gnu.org/licenses/gpl-3.0.en.html)  
+[GNU GPLv3](https://www.gnu.org/licenses/gpl-3.0.en.html)
