@@ -172,13 +172,15 @@ def action():
     serial = request.json["serial"]
     action = request.json["action"]
 
-    if main_ID == "dummy_source":
+    if main_ID == "nxdn_source":
         if action == "stun":
             print(f"Stunning {serial}")
+            radio.sendCommand("*SET,IDAS,TXSTUN,IND,"+str(serial))
         elif action == "kill":
             print(f"Killing {serial}")
         elif action == "revive":
             print(f"Reviving {serial}")
+            radio.sendCommand("*SET,IDAS,TXREVIVE,IND,"+str(serial))
         else:
             print(f"Unknown action {action} for {serial}")
 
