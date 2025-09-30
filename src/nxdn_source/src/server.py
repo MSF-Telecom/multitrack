@@ -160,6 +160,13 @@ def text():
     # print the data received
     print("Got text !")
     print(request.json)
+    main_ID = request.json["main_ID"]
+    serial = request.json["serial"]
+    text = request.json["text"]
+
+    if main_ID == "nxdn_source":
+        print(f"Sending \"{text}\" to {serial}")
+        radio.sendMessage(text, otherID=int(serial), verbose=True)
     return 'OK', 200
 
 @app.route('/action', methods=['POST'])
