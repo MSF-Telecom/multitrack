@@ -16,30 +16,32 @@ console.log('Hello from script.js!')
 //   }
 // };
 
-let db = {
-  "main-id": {
-    "type": "identify_plugin",
-    "main_ID": "main-id",
-    "actions": ["different", "actions", "here"],
-    "text": true,
-    "position": true,
-    "status": true,
-    "entities": {
-      "sn0000" : {
-        "type": "device",
-        "model": "model",
-        "serial": "sn0000",
-        "last_updated": "1743518674",
-        "position": {
-          "latitude": 50.8335,
-          "longitude": 4.36464
-        },
-        "text" : "Hello world",
-        "status" : "alive"
-      }
-    }
-  }
-};
+// let db = {
+//   "main-id": {
+//     "type": "identify_plugin",
+//     "main_ID": "main-id",
+//     "actions": ["different", "actions", "here"],
+//     "text": true,
+//     "position": true,
+//     "status": true,
+//     "entities": {
+//       "sn0000" : {
+//         "type": "device",
+//         "model": "model",
+//         "serial": "sn0000",
+//         "last_updated": "1743518674",
+//         "position": {
+//           "latitude": 50.8335,
+//           "longitude": 4.36464
+//         },
+//         "text" : "Hello world",
+//         "status" : "alive"
+//       }
+//     }
+//   }
+// };
+
+let db = {};
 
 let markers = {};
 let selectedKeys = [];
