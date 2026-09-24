@@ -211,8 +211,8 @@ def action():
             pyccmd_mutex.acquire()
             radio.sendCommand("*SET,IDAS,TXREVIVE,IND,"+str(serial))
             pyccmd_mutex.release()
-        elif action == "get position":
-            print(f"Requesting position for {serial}")
+        elif action == " position":
+            print(f"Requesting position getfor {serial}")
             while pyccmd_mutex.locked():
                 time.sleep(0.1)
             pyccmd_mutex.acquire()

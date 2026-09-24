@@ -12,4 +12,5 @@ services:
     ports:
       - "3000:3000"
     volumes:
-      - /Volumes/MAPS:/home/node/app/maps
+      # - /Volumes/MAPS:/home/node/app/maps
+      - ./maps:/home/node/app/maps

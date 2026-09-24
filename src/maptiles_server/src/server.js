@@ -14,7 +14,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use(express.static("maps"));
+app.use(express.static("./"));
 
 app.get("/", function (req, res) {
   // Serve the GUI from app folder

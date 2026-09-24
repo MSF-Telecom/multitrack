@@ -1,3 +1,4 @@
+const { layers, namedFlavor } = basemaps;
 
 let protocol = new pmtiles.Protocol({ metadata: true });
 maplibregl.addProtocol("pmtiles", protocol.tile);
@@ -15,54 +16,57 @@ const map = new maplibregl.Map({
   center: [4.36464, 50.8335],
   style: {
     version: 8,
+    glyphs: "http://"+ map_hostname +":3000" + "/fonts/{fontstack}/{range}.pbf",
+    sprite: "http://"+ map_hostname +":3000" + "/sprites/v4/light",
     sources: {
-      example_source: {
+      protomaps: {
         type: "vector",
         // For standard Z/X/Y tile APIs or Z/X/Y URLs served from go-pmtiles, replace "url" with "tiles" and remove all the pmtiles-related client code.
         // tiles: ["https://example.com/{z}/[x}/{y}.mvt"],
         // see https://maplibre.org/maplibre-style-spec/sources/#vector
-        url: "pmtiles://http://"+ map_hostname +":3000/map.pmtiles",
+        url: "pmtiles://http://"+ map_hostname +":3000/maps/map.pmtiles",
       },
     },
-    layers: [
-      {
-        id: "water",
-        source: "example_source",
-        "source-layer": "water",
-        filter: ["==", ["geometry-type"], "Polygon"],
-        type: "fill",
-        paint: {
-          "fill-color": "#80b1d3",
-        },
-      },
-      {
-        id: "buildings",
-        source: "example_source",
-        "source-layer": "buildings",
-        type: "fill",
-        paint: {
-          "fill-color": "#d9d9d9",
-        },
-      },
-      {
-        id: "roads",
-        source: "example_source",
-        "source-layer": "roads",
-        type: "line",
-        paint: {
-          "line-color": "#fc8d62",
-        },
-      },
-      {
-        id: "pois",
-        source: "example_source",
-        "source-layer": "pois",
-        type: "circle",
-        paint: {
-          "circle-color": "#ffffb3",
-        },
-      },
-    ],
+    layers : layers("protomaps" , namedFlavor("light"), {lang: "fr"}),
+    // layers: [
+    //   {
+    //     id: "water",
+    //     source: "example_source",
+    //     "source-layer": "water",
+    //     filter: ["==", ["geometry-type"], "Polygon"],
+    //     type: "fill",
+    //     paint: {
+    //       "fill-color": "#80b1d3",
+    //     },
+    //   },
+    //   {
+    //     id: "buildings",
+    //     source: "example_source",
+    //     "source-layer": "buildings",
+    //     type: "fill",
+    //     paint: {
+    //       "fill-color": "#d9d9d9",
+    //     },
+    //   },
+    //   {
+    //     id: "roads",
+    //     source: "example_source",
+    //     "source-layer": "roads",
+    //     type: "line",
+    //     paint: {
+    //       "line-color": "#fc8d62",
+    //     },
+    //   },
+    //   {
+    //     id: "pois",
+    //     source: "example_source",
+    //     "source-layer": "pois",
+    //     type: "circle",
+    //     paint: {
+    //       "circle-color": "#ffffb3",
+    //     },
+    //   },
+    // ],
     minZoom: 3,
     maxPitch: 0,
   },
